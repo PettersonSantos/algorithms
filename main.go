@@ -2,12 +2,14 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
 func main() {
 
-	fmt.Println(romanToInt("MCMXCIV"))
+	strs := "[({})]"
+	fmt.Println(isValid(strs))
 
 }
 func isMonotonic(nums []int) bool {
@@ -62,4 +64,48 @@ func romanToInt(s string) int {
 	}
 
 	return sum
+}
+
+func longestCommonPrefix(strs []string) string {
+	var longestPrefix string = ""
+	var endPrefix = false
+
+	if len(strs) > 0 {
+		sort.Strings(strs)
+		first := string(strs[0])
+		last := string(strs[len(strs)-1])
+
+		for i := 0; i < len(first); i++ {
+			if !endPrefix && string(last[i]) == string(first[i]) {
+				longestPrefix += string(last[i])
+			} else {
+				endPrefix = true
+			}
+		}
+	}
+	return longestPrefix
+}
+
+func isValid(str string) bool {
+	var s []byte
+
+	if str[0] == '(' || str[0] == '{' || str[0] == '[' {
+
+		for i := 0; i < len(str); i++ {
+			s = append(s, str[i])
+			if len(s) > 1 {
+				if s[len(s)-2] == '[' && s[len(s)-1] == ']' {
+					s = s[:len(s)-2]
+				} else if s[len(s)-2] == '{' && s[len(s)-1] == '}' {
+					s = s[:len(s)-2]
+				} else if s[len(s)-2] == '(' && s[len(s)-1] == ')' {
+					s = s[:len(s)-2]
+				}
+			}
+		}
+		if len(s) == 0 {
+			return true
+		}
+	}
+	return false
 }
