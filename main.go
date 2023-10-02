@@ -7,9 +7,9 @@ import (
 )
 
 func main() {
-	sr := []int{1,3,5,6}
 
-	fmt.Print(searchInsert(sr, 2))
+
+	fmt.Print(climbStairs(3))
 
 }
 func isMonotonic(nums []int) bool {
@@ -153,5 +153,15 @@ func searchInsert(nums []int, target int) int {
 	return len(nums)
 }
 
+func climbStairs(n int) int {
+	a := 0
+	b := 1
 
+	for i := 0; i < n; i++ {
+		a, b = b, a + b
+	}
+
+	return b
+
+}
 
